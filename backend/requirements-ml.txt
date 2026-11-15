@@ -1,0 +1,5 @@
+# Install into the existing backend virtual environment after requirements.txt.
+# Official CPU wheels only; no CUDA index or fallback versions.
+--index-url https://download.pytorch.org/whl/cpu
+torch==2.14.1+cpu
+torchvision==0.29.1+cpu

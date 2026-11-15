@@ -1,0 +1,28 @@
+# Render Blueprint specification for MediaLens AI Backend
+# Documentation: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: medialens-ai-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    plan: starter # Strongly recommended: 2 GB RAM (Starter) to avoid OOM during PyTorch & OpenCV video decoding
+    region: oregon
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: OPENCV_FORCE_DNN_ENGINE
+        value: "2"
+      - key: MEDIALENS_MAX_CONCURRENT_INFERENCE
+        value: "2"
+      - key: MEDIALENS_ALLOWED_ORIGINS
+        value: "https://medialens-ai.vercel.app,http://localhost:5173,http://localhost:5175"
+      - key: MEDIALENS_CHECKPOINT_URL
+        sync: false # Set in Render Dashboard: Secure HTTPS URL to best_model.pth (AWS S3, R2, GCS, HF)
+      - key: MEDIALENS_AUTH_TOKEN
+        sync: false # Optional bearer token for protected artifact storage
+      - key: MEDIALENS_AUTO_DOWNLOAD_YUNET
+        value: "1" # Automatically fetches verified YuNet ONNX model from OpenCV Zoo
+
