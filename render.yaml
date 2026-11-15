@@ -6,7 +6,7 @@ services:
     runtime: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: .
-    plan: starter # Strongly recommended: 2 GB RAM (Starter) to avoid OOM during PyTorch & OpenCV video decoding
+    plan: free # Free tier (512 MB RAM). For higher video workload performance, upgrade to starter (2 GB RAM).
     region: oregon
     healthCheckPath: /health
     autoDeploy: true
